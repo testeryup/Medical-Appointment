@@ -298,6 +298,7 @@ footer .footer-up {
 
 .modal .flex {
     display        : flex;
+    flex-direction : row;
     align-items    : center;
     justify-content: space-between;
 }
@@ -333,7 +334,7 @@ button {
 }
 
 .btn-close {
-    transform    : translate(10px, -20px);
+    /* transform    : translate(10px, -20px); */
     padding      : 0.5rem 0.7rem;
     background   : #eee;
     border-radius: 50%;
