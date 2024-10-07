@@ -9,9 +9,12 @@ let router = express.Router();
 let initWebRoutes = (app) => {
     // router.get('/', homeController.getHomePage);
     router.get('/', scheduleController.getHomePage);
-    router.get('/dashboard/user', scheduleController.getUserDashboard)
-    router.get('/dashboard/admin', scheduleController.getAdminDashboard)
+    // router.get('/dashboard/user', scheduleController.getUserDashboard)
+    // router.get('/dashboard/admin', scheduleController.getAdminDashboard)
     router.get('/login', scheduleController.getLogin);
+    
+    router.get('/dashboard/user/:userId', scheduleController.getUserDashboard)
+    router.get('/dashboard/admin/:userId', scheduleController.getAdminDashboard)
 
     router.post('/api/user-create-new-schedule', scheduleController.handleCreateNewSchedule);
     router.post('/api/confirm-schedule', scheduleController.handleConfirmUserSchedule)

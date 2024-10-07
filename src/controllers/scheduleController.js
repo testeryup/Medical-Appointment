@@ -5,18 +5,25 @@ const getHomePage = (req, res) => {
     res.sendFile(path.join(__dirname, '../public/html/home.html'));
 }
 
-const getUserDashboard = (req, res) => {
-    res.render('userDashboard.ejs');
+const getUserDashboard = async (req, res) => {
+    const id = req.params.userId;
+    let message = await scheduleService.getUserSchedules(id);
+    res.render('userDashboard.ejs', { schedule_data: message });
 }
 
-const getAdminDashboard = (req, res) => {
-    res.render("adminDashboard.ejs");
+const getAdminDashboard = async (req, res) => {
+    let message = await scheduleService.getUserSchedules(id);
+    res.render("adminDashboard.ejs", {all_schedule_data: message});
 }
 
 const getLogin = (req, res) => {
     res.sendFile(path.join(__dirname, '../public/html/login.html'));
 }
 
+const getTestUser = (req, res) => {
+    const id = req.params.userId;
+    console.log("check id:", id);
+}
 const handleCreateNewSchedule = async (req, res) => {
     let message = await scheduleService.createNewSchedule(req.body)
     return res.status(200).json(message);
@@ -55,5 +62,6 @@ module.exports = {
     handleConfirmUserSchedule,
     handleUpdateScheduleStatus,
     handleGetUserSchedule,
-    handleGetAllUserSchedules
+    handleGetAllUserSchedules,
+    getTestUser
 }

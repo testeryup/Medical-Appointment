@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Metrophobic&family=Outfit:wght@100..900&display=swap"
         rel="stylesheet">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
 </head>
 
 <body>
@@ -37,8 +37,58 @@
         </nav>
     </header>
     <div style="color: white; width: 100%; height: 80px;"></div>
+    <div>
+        <%= JSON.stringify(schedule_data)%>
+    </div>
+    <div class="modal-container">
+        <section class="modal hidden">
+            <div class="flex">
+                <div>
+                    <h2>Đặt lịch khám 🩺</h2>
+                </div>
+                <button type="button" class="btn-close">✖</button>
+            </div>
+            <form id="form" action="/api/user-create-new-schedule" method="post">
 
-    <div class="body-container">
+
+                <div class="form-group">
+                    <section>
+                        <label for="appointmentTime">Ca khám</label>
+                        <select id="appointmentTime" name="appointmentTime" required>
+                            <option value="07:00">7:00 AM</option>
+                            <option value="09:00">9:00 AM</option>
+                            <option value="14:00">14:00 PM</option>
+                            <option value="16:00">16:00 PM</option>
+                        </select>
+                    </section>
+                    <section>
+                        <label for="appointmentDate">Ngày</label>
+                        <input type="date" id="appointmentDate" name="appointmentDate" required />
+                    </section>
+
+                </div>
+                <section>
+                    <label for="facilityId">Chi nhánh</label>
+                    <select id="facilityId" name="facilityId" required>
+                        <option value="1">Hà Nội</option>
+                        <option value="2">Hồ Chí Minh</option>
+                        <option value="3">Đà Nẵng</option>
+                        <option value="4">Bình Dương</option>
+                    </select>
+                </section>
+                <section>
+                    <label for="symptom">Triệu chứng</label>
+                    <textarea id="symptom" placeholder="triệu chứng của bệnh, chấn thương" name="symptom"
+                        required></textarea>
+                </section>
+                <div class="btn-container">
+                    <button class="btn submit-form" type="submit">Submit</button>
+                </div>
+
+            </form>
+        </section>
+        <div class="overlay hidden"></div>
+        <button class="btn btn-open-modal">Đặt lịch khám 🩺</button>
 
     </div>
 
@@ -84,6 +134,29 @@
 
         const logout = document.querySelector('.header-logout');
         logout.addEventListener('click', logOut);
+
+        const today = new Date().toISOString().split('T')[0];
+        // Set the min attribute of the appointmentDate input to today's date
+        document.getElementById('appointmentDate').setAttribute('min', today);
+
+
+        const modal = document.querySelector(".modal");
+        const overlay = document.querySelector(".overlay");
+        const openModalBtn = document.querySelector(".btn-open-modal");
+        const closeModalBtn = document.querySelector(".btn-close");
+        const openModal = function () {
+            modal.classList.remove("hidden");
+            overlay.classList.remove("hidden");
+
+        };
+        openModalBtn.addEventListener("click", openModal);
+
+        const closeModal = function () {
+            modal.classList.add("hidden");
+            overlay.classList.add("hidden");
+        };
+        closeModalBtn.addEventListener("click", closeModal);
+        overlay.addEventListener("click", closeModal);
     </script>
 </body>
 
