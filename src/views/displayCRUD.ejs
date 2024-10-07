@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: greenyellow;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-edit, .btn-delete{
+            outline: none;
+            border: none;
+            background: orange;
+            border-radius: 3px;
+            height: 25px;
+            width: 60px;
+            cursor: pointer;
+            color: #f9f9f9;
+        }
+
+        .btn-delete{
+            background: #ff0024;
+        }
+
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Table</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Gender</th>
+                    <!-- <th>Image</th> -->
+                    <!-- <th>Role ID</th> -->
+                    <!-- <th>Position ID</th> -->
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% dataTable.forEach(function(user) { %>
+                    <tr>
+                        <td><%= user.id %></td>
+                        <td><%= user.email %></td>
+                        <td>********</td> <!-- Assuming you don't want to display the actual password -->
+                        <td><%= user.firstName %></td>
+                        <td><%= user.lastName %></td>
+                        <td><%= user.address %></td>
+                        <td><%= user.phonenumber %></td>
+                        <td><%= user.gender %></td>
+                        <!-- <td><%= user.image %></td>
+                        <td><%= user.roleId %></td>
+                        <td><%= user.positionId %></td> -->
+                        <td>
+                            <a href="edit-crud?id=<%=user.id%>">
+                                <button class="btn-edit">Edit</button>
+                            </a>
+                            <a href="delete-crud?id=<%=user.id%>">
+                                <button class="btn-delete">Delete</button>
+                            </a>
+                            
+                        </td>
+                    </tr>
+                <% }); %>
+                <!--  -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
