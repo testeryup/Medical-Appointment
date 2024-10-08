@@ -13,30 +13,136 @@
 </head>
 
 <body>
-    <header>
-        <div class="left">
-            <a href="/"><img width="80px" src="/images/logo.png" alt="logo"></a>
-            <div class="lefttext">
-                <div class="up">
-                    <h1>Physi</h1>
-                    <h1>CURE</h1>
+    <div class="wrapper">
+        <header>
+            <div class="left">
+                <a href="/"><img width="80px" src="/images/logo.png" alt="logo"></a>
+                <div class="lefttext">
+                    <div class="up">
+                        <h1>Physi</h1>
+                        <h1>CURE</h1>
+                    </div>
+                    <div class="down">
+                        <h2 style="font-size: 15px;">Physical Therapy</h2>
+                    </div>
                 </div>
-                <div class="down">
-                    <h2 style="font-size: 15px;">Physical Therapy</h2>
+            </div>
+            <nav class="right">
+                <p><a href="/">Home</a></p>
+                <p><a href="/login">Lịch hẹn</a></p>
+                <p><a href="/html/location.html">Cơ sở</a></p>
+                <p><a href="/html/services.html">Dịch vụ</a></p>
+                <p><a href="/html/blog.html">Blog</a></p>
+                <p style="width: 85px;"><a href="/html/career.html">Tuyển dụng</a></p>
+                <p><a href="/" class="header-logout">Log out</a></p>
+            </nav>
+        </header>
+        <div style="color: white; width: 100%; height: 80px;"></div>
+        <div class="status-container">
+            <div class="status-counts">
+                <div class="status-card">
+                    <h2>Confirmed</h2>
+                    <p>
+                        <%= status_counts.confirmed %>
+                    </p>
+                </div>
+                <div class="status-card">
+                    <h2>Scheduled</h2>
+                    <p>
+                        <%= status_counts.scheduled %>
+                    </p>
+                </div>
+                <div class="status-card">
+                    <h2>Completed</h2>
+                    <p>
+                        <%= status_counts.completed %>
+                    </p>
+                </div>
+                <div class="status-card">
+                    <h2>Canceled</h2>
+                    <p>
+                        <%= status_counts.canceled %>
+                    </p>
                 </div>
             </div>
         </div>
-        <nav class="right">
-            <p><a href="/">Home</a></p>
-            <p><a href="/login">Lịch hẹn</a></p>
-            <p><a href="/html/location.html">Cơ sở</a></p>
-            <p><a href="/html/services.html">Dịch vụ</a></p>
-            <p><a href="/html/blog.html">Blog</a></p>
-            <p style="width: 85px;"><a href="/html/career.html">Tuyển dụng</a></p>
-            <p><a href="/" class="header-logout">Log out</a></p>
-        </nav>
-    </header>
-    <div style="color: white; width: 100%; height: 80px;"></div>
+        <div class="schedule-table">
+            <h2>All Schedules</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone</th>
+                            <th>Facility</th>
+                            <th>Time</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Symptom</th>
+                            <th>Confirmed</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% all_schedule_data.forEach(function(schedule) { %>
+                            <tr>
+                                <td>
+                                    <%= schedule.userEmail %>
+                                </td>
+                                <td>
+                                    <%= schedule.userFirstName %>
+                                </td>
+                                <td>
+                                    <%= schedule.userLastName %>
+                                </td>
+                                <td>
+                                    <%= schedule.userPhonenumber %>
+                                </td>
+                                <td>
+                                    <%= schedule.facilityName %>
+                                </td>
+                                <td>
+                                    <%= schedule.appointmentTime %>
+                                </td>
+                                <td>
+                                    <%= schedule.appointmentDate %>
+                                </td>
+                                <td>
+                                    <select class="status-select" data-id="<%= schedule.id %>">
+                                        <option value="scheduled" <%=schedule.status==='scheduled' ? 'selected' : '' %>
+                                            >Scheduled</option>
+                                        <option value="completed" <%=schedule.status==='completed' ? 'selected' : '' %>
+                                            >Completed</option>
+                                        <option value="canceled" <%=schedule.status==='canceled' ? 'selected' : '' %>
+                                            >Canceled</option>
+                                    </select>
+                                </td>
+                                <td class="symptom">
+                                    <%= schedule.symptom %>
+                                </td>
+                                <!-- <td class="<%= schedule.isConfirmed ? 'confirmed' : 'not-confirmed' %>">
+                                    <%= schedule.isConfirmed ? "Yes" : "No" %> -->
+                                </td>
+                                <td>
+                                    <select class="confirmed-select"
+                                        class="<%= schedule.isConfirmed ? 'confirmed' : 'not-confirmed' %>"
+                                        data-id="<%= schedule.id %>">
+                                        <option value="true" <%=schedule.isConfirmed ? 'selected' : '' %>>Yes</option>
+                                        <option value="false" <%=!schedule.isConfirmed ? 'selected' : '' %>>No</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn-update" data-id="<%= schedule.id %>">Update</button>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-up">
@@ -78,7 +184,32 @@
 
         const logout = document.querySelector('.header-logout');
         logout.addEventListener('click', logOut);
+
+        document.querySelectorAll('.btn-update').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const id = event.target.getAttribute('data-id');
+                const status = document.querySelector(`.status-select[data-id="${id}"]`).value;
+                const isConfirmed = document.querySelector(`.confirmed-select[data-id="${id}"]`).value;
+
+                const response = await fetch('/update-schedule', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id, status, isConfirmed })
+                });
+
+                const result = await response.json();
+                if (result.errCode === 0) {
+                    alert('Schedule updated successfully!');
+                } else {
+                    alert('Failed to update schedule: ' + result.errMessage);
+                }
+            });
+        });
     </script>
+
+
 </body>
 
 </html>

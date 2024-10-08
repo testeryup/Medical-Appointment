@@ -13,84 +13,140 @@
 </head>
 
 <body>
-    <header>
-        <div class="left">
-            <a href="/"><img width="80px" src="/images/logo.png" alt="logo"></a>
-            <div class="lefttext">
-                <div class="up">
-                    <h1>Physi</h1>
-                    <h1>CURE</h1>
-                </div>
-                <div class="down">
-                    <h2 style="font-size: 15px;">Physical Therapy</h2>
+    <div class="wrapper">
+        <header>
+            <div class="left">
+                <a href="/"><img width="80px" src="/images/logo.png" alt="logo"></a>
+                <div class="lefttext">
+                    <div class="up">
+                        <h1>Physi</h1>
+                        <h1>CURE</h1>
+                    </div>
+                    <div class="down">
+                        <h2 style="font-size: 15px;">Physical Therapy</h2>
+                    </div>
                 </div>
             </div>
-        </div>
-        <nav class="right">
-            <p><a href="/">Home</a></p>
-            <p><a href="/login">Lịch hẹn</a></p>
-            <p><a href="/html/location.html">Cơ sở</a></p>
-            <p><a href="/html/services.html">Dịch vụ</a></p>
-            <p><a href="/html/blog.html">Blog</a></p>
-            <p style="width: 85px;"><a href="/html/career.html">Tuyển dụng</a></p>
-            <p><a href="/" class="header-logout">Log out</a></p>
-        </nav>
-    </header>
-    <div style="color: white; width: 100%; height: 80px;"></div>
-    <div>
-        <%= JSON.stringify(schedule_data)%>
-    </div>
-    <div class="modal-container">
-        <section class="modal hidden">
-            <div class="flex">
-                <div>
-                    <h2>Đặt lịch khám 🩺</h2>
+            <nav class="right">
+                <p><a href="/">Home</a></p>
+                <p><a href="/login">Lịch hẹn</a></p>
+                <p><a href="/html/location.html">Cơ sở</a></p>
+                <p><a href="/html/services.html">Dịch vụ</a></p>
+                <p><a href="/html/blog.html">Blog</a></p>
+                <p style="width: 85px;"><a href="/html/career.html">Tuyển dụng</a></p>
+                <p><a href="/" class="header-logout">Log out</a></p>
+            </nav>
+        </header>
+        <div style="color: white; width: 100%; height: 80px;"></div>
+        <!-- <div>
+            <%= JSON.stringify(schedule_data)%>
+        </div> -->
+        <div class="modal-container">
+            <section class="modal hidden">
+                <div class="flex">
+                    <div>
+                        <h2>Đặt lịch khám 🩺</h2>
+                    </div>
+                    <button type="button" class="btn-close">✖</button>
                 </div>
-                <button type="button" class="btn-close">✖</button>
-            </div>
-            <form id="form" action="/api/user-create-new-schedule" method="post">
+                <form id="form" action="/api/user-create-new-schedule" method="post">
+                    <div class="form-group">
+                        <section>
+                            <label for="appointmentTime">Ca khám</label>
+                            <select id="appointmentTime" name="appointmentTime" required>
+                                <option value="07:00">7:00 AM</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="14:00">14:00 PM</option>
+                                <option value="16:00">16:00 PM</option>
+                            </select>
+                        </section>
+                        <section>
+                            <label for="appointmentDate">Ngày</label>
+                            <input type="date" id="appointmentDate" name="appointmentDate" required />
+                        </section>
 
-
-                <div class="form-group">
+                    </div>
                     <section>
-                        <label for="appointmentTime">Ca khám</label>
-                        <select id="appointmentTime" name="appointmentTime" required>
-                            <option value="07:00">7:00 AM</option>
-                            <option value="09:00">9:00 AM</option>
-                            <option value="14:00">14:00 PM</option>
-                            <option value="16:00">16:00 PM</option>
+                        <label for="facilityId">Chi nhánh</label>
+                        <select id="facilityId" name="facilityId" required>
+                            <option value="1">Hà Nội</option>
+                            <option value="2">Đà Nẵng</option>
+                            <option value="3">Hồ Chí Minh</option>
+                            <option value="4">Bình Dương</option>
                         </select>
                     </section>
                     <section>
-                        <label for="appointmentDate">Ngày</label>
-                        <input type="date" id="appointmentDate" name="appointmentDate" required />
+                        <label for="symptom">Triệu chứng</label>
+                        <textarea id="symptom" placeholder="triệu chứng của bệnh, chấn thương" name="symptom"
+                            required></textarea>
                     </section>
+                    <div class="btn-container">
+                        <button class="btn submit-form" type="submit">Submit</button>
+                    </div>
+                </form>
+            </section>
+            <div class="overlay hidden"></div>
+            <button class="btn btn-open-modal">Đặt lịch khám ngay 🩺</button>
+        </div>
 
-                </div>
-                <section>
-                    <label for="facilityId">Chi nhánh</label>
-                    <select id="facilityId" name="facilityId" required>
-                        <option value="1">Hà Nội</option>
-                        <option value="2">Hồ Chí Minh</option>
-                        <option value="3">Đà Nẵng</option>
-                        <option value="4">Bình Dương</option>
-                    </select>
-                </section>
-                <section>
-                    <label for="symptom">Triệu chứng</label>
-                    <textarea id="symptom" placeholder="triệu chứng của bệnh, chấn thương" name="symptom"
-                        required></textarea>
-                </section>
-                <div class="btn-container">
-                    <button class="btn submit-form" type="submit">Submit</button>
-                </div>
+        <div class="schedule-list-wraper">
+            <div class="schedule-title">
+                <h2>Lịch hẹn đã đặt</h2>
+            </div>
+            <div class="schedule-list">
+                <% schedule_data.forEach(function(schedule) {%>
+                    <div class="card">
+                        <div class="flex group">
+                            <div class="label">
+                                <h3>Facility</h3>
+                            </div>
+                            <div class="user-data">
+                                <%= schedule.facilityName %>
+                            </div>
+                        </div>
+                        <div class="flex group">
+                            <div class="label">
+                                <h3>Appointment date</h3>
+                            </div>
+                            <div class="user-data">
+                                <%= schedule.appointmentDate %>
+                            </div>
+                        </div>
+                        <div class="flex group">
+                            <div class="label">
+                                <h3>Appointment time</h3>
+                            </div>
+                            <div class="user-data">
+                                <%= schedule.appointmentTime %>
+                            </div>
+                        </div>
 
-            </form>
-        </section>
-        <div class="overlay hidden"></div>
-        <button class="btn btn-open-modal">Đặt lịch khám 🩺</button>
 
+                        <div class="flex group">
+                            <div class="label">
+                                <h3>Confirmed</h3>
+                            </div>
+                            <div class="user-data">
+                                <h4 class="<%= schedule.isConfirmed ? 'confirmed' : 'not-confirmed' %>">
+                                    <%= schedule.isConfirmed ? "Yes" : "No" %>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="flex group">
+                            <div class="label">
+                                <h3>Symptom</h3>
+                            </div>
+                            <div class="user-data">
+                                <%= schedule.symptom %>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+        </div>
     </div>
+
 
     <footer>
         <div class="footer-up">
@@ -154,9 +210,41 @@
         const closeModal = function () {
             modal.classList.add("hidden");
             overlay.classList.add("hidden");
+            form.reset();
         };
         closeModalBtn.addEventListener("click", closeModal);
         overlay.addEventListener("click", closeModal);
+
+        const submitSchedule = async (event) => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            data.userId = localStorage.getItem('userId');
+            console.log(data);
+            const response = await fetch("/api/user-create-new-schedule", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            if (response.ok && result.errCode === 0) {
+                alert('Create schedule successfully 🎉');
+                closeModal();
+                console.log('result:', result);
+                console.log('response', response);
+            }
+            else {
+                alert('Some error occured, try again later 😥');
+                closeModal();
+            }
+        }
+        const form = document.querySelector("#form");
+        form.addEventListener('submit', submitSchedule)
     </script>
 </body>
 

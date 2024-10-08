@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         appointmentDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false
         },
         appointmentTime: {
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
         sequelize,
         modelName: 'UserSchedule',
     });
-    UserSchedule.associate = function(models) {
+    UserSchedule.associate = function (models) {
         UserSchedule.belongsTo(models.User, { foreignKey: 'userId' });
         UserSchedule.belongsTo(models.Facility, { foreignKey: 'facilityId' });
     };

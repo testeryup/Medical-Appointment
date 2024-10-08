@@ -98,10 +98,12 @@ const getUserSchedules = async (userId = null) => {
 
         const schedules = await UserSchedule.findAll({
             attributes: [
+                'id',
                 'appointmentDate',
                 'appointmentTime',
                 'symptom',
-                'isConfirmed'
+                'isConfirmed',
+                'status'
             ],
             include: [
                 {
@@ -118,10 +120,12 @@ const getUserSchedules = async (userId = null) => {
         });
 
         const formattedSchedules = schedules.map(schedule => ({
+            id: schedule.id,
             appointmentDate: moment(schedule.appointmentDate).format('YYYY-MM-DD'),
             appointmentTime: moment(schedule.appointmentTime, 'HH:mm:ss').format('HH:mm'),
             symptom: schedule.symptom,
             isConfirmed: schedule.isConfirmed,
+            status: schedule['status'],
             userEmail: schedule['User.email'],
             userFirstName: schedule['User.firstName'],
             userLastName: schedule['User.lastName'],

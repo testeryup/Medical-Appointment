@@ -11,9 +11,18 @@ const getUserDashboard = async (req, res) => {
     res.render('userDashboard.ejs', { schedule_data: message });
 }
 
+const countStatuses = (schedules) => {
+    return schedules.reduce((acc, schedule) => {
+        if (schedule.isConfirmed) acc.confirmed++;
+        acc[schedule.status]++;
+        return acc;
+    }, { confirmed: 0, scheduled: 0, completed: 0, canceled: 0 });
+};
+
 const getAdminDashboard = async (req, res) => {
-    let message = await scheduleService.getUserSchedules(id);
-    res.render("adminDashboard.ejs", {all_schedule_data: message});
+    let schedules = await scheduleService.getUserSchedules();
+    const counts = countStatuses(schedules);
+    res.render("adminDashboard.ejs", { all_schedule_data: schedules, status_counts: counts });
 }
 
 const getLogin = (req, res) => {

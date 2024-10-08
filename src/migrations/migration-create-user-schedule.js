@@ -28,7 +28,7 @@ module.exports = {
                 onDelete: 'SET NULL'
             },
             appointmentDate: {
-                type: Sequelize.DATE,
+                type: Sequelize.DATEONLY,
                 allowNull: false
             },
             appointmentTime: {
