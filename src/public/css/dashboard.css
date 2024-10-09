@@ -410,14 +410,15 @@ section label {
 .schedule-list {
     display            : flex;
     justify-content    : space-between;
-    width              : 80%;
+    width              : 1280px;
     /* border          : 1px solid red; */
     border-radius      : 10px;
     margin             : 20px auto;
-    padding            : 10px;
+    padding            : 20px;
     flex-wrap          : wrap;
     background-color   : var(--color-54ba7c9);
     box-shadow         : 0 4px 8px rgba(0, 0, 0, 0.1), 0 -4px 8px rgba(0, 0, 0, 0.1);
+    gap                : 20px;
 }
 
 .card {
@@ -432,6 +433,11 @@ section label {
     padding             : 0 15px;
     border-radius       : 10px;
     box-shadow          : 0 4px 8px rgba(0, 0, 0, 0.1), 0 -4px 8px rgba(0, 0, 0, 0.1);
+    transition          : transform 0.5s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
 }
 
 .schedule-title>h2 {

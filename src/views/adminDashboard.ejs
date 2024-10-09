@@ -73,16 +73,16 @@
                     <thead>
                         <tr>
                             <th>Email</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Phone</th>
-                            <th>Facility</th>
-                            <th>Time</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Symptom</th>
-                            <th>Confirmed</th>
-                            <th>Actions</th>
+                            <th>Tên</th>
+                            <th>Họ</th>
+                            <th>SDT</th>
+                            <th>Cơ sở</th>
+                            <th>Giờ</th>
+                            <th>Ngày</th>
+                            <th>Trạng thái</th>
+                            <th>Triệu chứng</th>
+                            <th>Xác nhận</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,8 +122,6 @@
                                 <td class="symptom">
                                     <%= schedule.symptom %>
                                 </td>
-                                <!-- <td class="<%= schedule.isConfirmed ? 'confirmed' : 'not-confirmed' %>">
-                                    <%= schedule.isConfirmed ? "Yes" : "No" %> -->
                                 </td>
                                 <td>
                                     <select class="confirmed-select"
@@ -189,9 +187,11 @@
             button.addEventListener('click', async (event) => {
                 const id = event.target.getAttribute('data-id');
                 const status = document.querySelector(`.status-select[data-id="${id}"]`).value;
-                const isConfirmed = document.querySelector(`.confirmed-select[data-id="${id}"]`).value;
+                const isConfirmed = document.querySelector(`.confirmed-select[data-id="${id}"]`).value == "true" ? 1 : 0;
 
-                const response = await fetch('/update-schedule', {
+                // console.log(`check data>> id: ${id} >> status: ${status} >> confirmed: ${isConfirmed}`);
+
+                const response = await fetch('/api/update-schedule-status', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -201,9 +201,9 @@
 
                 const result = await response.json();
                 if (result.errCode === 0) {
-                    alert('Schedule updated successfully!');
+                    alert('Schedule updated successfully 🎉');
                 } else {
-                    alert('Failed to update schedule: ' + result.errMessage);
+                    alert('❌ Failed to update schedule: ' + result.errMessage);
                 }
             });
         });

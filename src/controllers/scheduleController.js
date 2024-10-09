@@ -40,16 +40,17 @@ const handleCreateNewSchedule = async (req, res) => {
 
 const handleConfirmUserSchedule = async (req, res) => {
     const scheduleId = req.body.scheduleId;
-    console.log('scheduleId check:', scheduleId);
 
     let message = await scheduleService.adminConfirmUserSchedule(scheduleId);
     return res.status(200).json(message);
 }
 
 const handleUpdateScheduleStatus = async (req, res) => {
-    const scheduleId = req.body.scheduleId;
-    const newStatus = req.body.newStatus;
-    let message = await scheduleService.updateScheduleStatus(scheduleId, newStatus);
+    const scheduleId = req.body.id;
+    const newStatus = req.body.status;
+    const isConfirmed = req.body.isConfirmed;
+    // console.log("check controller: ", { scheduleId, newStatus, isConfirmed });
+    let message = await scheduleService.updateScheduleStatus(scheduleId, newStatus, isConfirmed);
     return res.status(200).json(message);
 }
 const handleGetUserSchedule = async (req, res) => {

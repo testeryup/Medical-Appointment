@@ -54,9 +54,9 @@ const adminConfirmUserSchedule = (scheduleId) => {
     });
 };
 
-const updateScheduleStatus = (scheduleId, newStatus) => {
+const updateScheduleStatus = (scheduleId, newStatus, isConfirmed) => {
     return new Promise(async (resolve, reject) => {
-        const allowedStatuses = ['scheduled', 'completed', 'canceled']
+        const allowedStatuses = ['scheduled', 'completed', 'canceled'];
         if (!allowedStatuses.includes(newStatus)) {
             resolve({
                 errCode: 3,
@@ -77,6 +77,7 @@ const updateScheduleStatus = (scheduleId, newStatus) => {
                 });
             } else {
                 schedule.status = newStatus;
+                schedule.isConfirmed = isConfirmed;
                 await schedule.save();
                 resolve({
                     errCode: 0,
