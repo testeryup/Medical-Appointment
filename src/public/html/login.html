@@ -39,29 +39,29 @@
     <div style="color: white; width: 100%; height: 80px;"></div>
     <div class="login-form-container">
         <div class="login-container">
-            <h2>Login</h2>
+            <h2>Đăng nhập</h2>
             <div id="error-message" class="error-message"></div>
             <form id="login-form" action="/api/login" method="post">
                 <label for="email">Email:</label>
                 <input type="text" id="email" name="email" placeholder="Enter email" required>
 
-                <label for="current-password">Password:</label>
+                <label for="current-password">Mật khẩu:</label>
                 <input type="password" id="current-password" name="password" placeholder="Enter password" required>
                 <div class="login-error hidden">
 
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit">Đăng nhập</button>
             </form>
             <div class="register-container">
                 <div class="ask-user">
-                    <div>Dont have account ? </div>
-                    <a class="sign-up btn-open">Sign up</a>
+                    <div>Chưa có tài khoản ? </div>
+                    <a class="sign-up btn-open">Đăng ký</a>
                 </div>
 
                 <section class="modal hidden">
                     <div class="flex">
                         <div>
-                            <h2>Sign-up</h2>
+                            <h2>Đăng ký</h2>
                         </div>
                         <button type="button" class="btn-close">❌</button>
                     </div>
@@ -69,39 +69,39 @@
                         <label for="email">Email</label>
                         <input type="email" id="email" placeholder="dat6969@gmail.com" name="email" required />
 
-                        <label for="password">Password</label>
+                        <label for="password">Mật khẩu</label>
                         <input type="password" id="password" name="password" required />
 
                         <div class="form-group">
                             <section>
-                                <label for="firstName">First Name</label>
+                                <label for="firstName">Tên</label>
                                 <input type="text" id="firstName" name="firstName" required />
                             </section>
                             <section>
-                                <label for="lastName">Last Name</label>
+                                <label for="lastName">Họ</label>
                                 <input type="text" id="lastName" name="lastName" required />
                             </section>
                         </div>
-                        <label for="address">Address</label>
+                        <label for="address">Địa chỉ</label>
                         <input type="text" id="address" name="address" placeholder="So 7 Thien Quang" required />
 
                         <div class="form-group">
                             <section>
-                                <label for="phonenumber">Phone number</label>
+                                <label for="phonenumber">Số điện thoại</label>
                                 <input type="phonenumber" id="phonenumber" placeholder="0954353454" name="phonenumber"
                                     required />
                             </section>
 
                             <section>
-                                <label for="gender">Sex</label>
+                                <label for="gender">Giới tính</label>
                                 <select id="gender" name="gender" required>
-                                    <option value="1">Male</option>
-                                    <option value="0">Female</option>
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nữ</option>
                                 </select>
                             </section>
                         </div>
                         <div class="create-user-error hidden"></div>
-                        <button class="btn submit-create-form" type="submit">Submit</button>
+                        <button class="btn submit-create-form" type="submit">Xác nhận</button>
                     </form>
 
                 </section>
@@ -190,7 +190,7 @@
             if (response.ok && result.errCode === 0) {
                 console.log('message', result.errMessage); // Success message
                 closeModal(); // Clear the form on success
-                alert('Create account successfully, please login to your Dashboard 🎉');
+                alert('Tạo tài khoản thành công🎉');
                 if (result.user.roleId === 3) {
                     window.location.href = '/dashboard/user';
                 }
@@ -201,6 +201,7 @@
                 console.error(result); // Error message
                 create_user_rerror.classList.remove("hidden");
                 create_user_rerror.innerHTML = result.errMessage;
+                alert('Tạo tài khoản thất bại❌');
             }
 
         });

@@ -58,7 +58,7 @@ body {
 
 .login-container,
 .dashboard-container {
-    width           : 300px;
+    width           : 350px;
     margin          : 100px auto;
     padding         : 20px;
     background-color: white;
@@ -73,6 +73,7 @@ h2 {
 form {
     display       : flex;
     flex-direction: column;
+    gap           : 5px;
 }
 
 input {
@@ -176,6 +177,7 @@ button {
     display        : flex;
     justify-content: space-between;
     align-items    : center;
+    margin-top     : 10px;
 }
 
 .sign-up {
